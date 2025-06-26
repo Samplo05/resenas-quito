@@ -1,8 +1,4 @@
 {
-	"scripts": {
-  "start": "node server.js"
-}
-
   "name": "sabores-de-quito",
   "version": "1.0.0",
   "description": "Aplicación para reseñas de lugares para comer en Quito",
