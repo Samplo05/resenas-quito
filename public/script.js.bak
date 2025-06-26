@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_URL = 'https://resenas-quito.onrender.com'; // <-- Cambia a tu URL real
+  const API_URL = 'https://resenas-quito.onrender.com/api/resenas'; // <-- Cambia a tu URL real
 
   const form = document.getElementById('form-recomendacion');
   const contenedorResenas = document.querySelector('.resenas-contenedor');

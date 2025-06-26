@@ -51,36 +51,27 @@
   </footer>
 
   <script>
-  document.getElementById('nuevoLugarForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
+    document.getElementById('nuevoLugarForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
 
-    const datos = {
-      nombre: form.nombre.value,
-      direccion: form.direccion.value,
-      comentario: form.comentario.value,
-      puntuacion: parseInt(form.puntuacion.value)
-    };
+      try {
+        const response = await fetch('https://tu-backend.com/api/guardar', {
+          method: 'POST',
+          body: formData
+        });
 
-    try {
-      const response = await fetch('https://resenas-quito.onrender.com/api/resenas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
-      });
-
-      if (response.ok) {
-        alert('Lugar guardado exitosamente');
-        form.reset();
-      } else {
-        alert('Hubo un error al guardar el lugar');
+        if (response.ok) {
+          alert('Lugar guardado exitosamente');
+          form.reset();
+        } else {
+          alert('Hubo un error al guardar el lugar');
+        }
+      } catch (err) {
+        alert('Error de conexión: ' + err.message);
       }
-    } catch (err) {
-      alert('Error de conexión: ' + err.message);
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 </html>

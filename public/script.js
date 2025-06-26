@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_URL = 'https://resenas-quito.onrender.com/api/resenas'; // <-- Cambia a tu URL real
-
   const form = document.getElementById('form-recomendacion');
   const contenedorResenas = document.querySelector('.resenas-contenedor');
   const filtro = document.getElementById('filtroPuntuacion');
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function cargarResenas() {
     try {
-      const resp = await fetch(API_URL);
+      const resp = await fetch('/api/resenas');
       if (!resp.ok) throw new Error('Error al cargar reseñas');
       reseñas = await resp.json();
       mostrarResenas(reseñas);
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const article = document.createElement('article');
       article.classList.add('resena');
       article.innerHTML = `
-        <img src="${resena.imagen || 'imagenes/default.jpg'}" alt="Foto del lugar" />
+        ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${resena.direccion}</p>
         <p><strong>Comentario:</strong> ${resena.comentario}</p>
@@ -57,13 +55,22 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(form);
+    const datos = {
+      nombre: form.nombre.value,
+      direccion: form.direccion.value,
+      comentario: form.comentario.value,
+      puntuacion: form.puntuacion.value
+    };
 
     try {
-      const resp = await fetch(API_URL, {
+      const resp = await fetch('/api/resenas', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
       });
+
       if (!resp.ok) throw new Error('Error al enviar la reseña');
 
       const nuevaResena = await resp.json();
@@ -76,25 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Error al enviar la reseña');
     }
   });
-
-  // Aquí revisa si tienes ruta DELETE sin id para borrar todas, si no, mejor comentar esta parte
-  /*
-  document.getElementById('borrarTodo').addEventListener('click', async () => {
-    if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
-
-    try {
-      const resp = await fetch(API_URL, { method: 'DELETE' });
-      if (!resp.ok) throw new Error('Error borrando reseñas');
-
-      reseñas = [];
-      mostrarResenas(reseñas);
-      alert('Todas las reseñas fueron borradas');
-    } catch (error) {
-      console.error(error);
-      alert('Error al borrar reseñas');
-    }
-  });
-  */
 
   toggleOscuro.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
@@ -110,6 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
     a.download = 'resenas_quito.json';
     a.click();
     URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('borrarTodo').addEventListener('click', async () => {
+    if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
+
+    try {
+      const resp = await fetch('/api/resenas', { method: 'DELETE' });
+      if (!resp.ok) throw new Error('Error borrando reseñas');
+      reseñas = [];
+      mostrarResenas(reseñas);
+      alert('Todas las reseñas fueron borradas');
+    } catch (error) {
+      console.error(error);
+      alert('Error al borrar reseñas');
+    }
   });
 
   cargarResenas();
