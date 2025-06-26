@@ -4,13 +4,21 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
-const { v2: cloudinary } = require('cloudinary');
-const { CloudinaryStorage } = require('multer');
 const multer = require('multer');
+const { v2: cloudinary } = require('cloudinary');
+const streamifier = require('streamifier');
+const Resena = require('./models/Resena');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ Conectado a MongoDB'))
+.catch(err => console.error('❌ Error en conexión a MongoDB:', err));
 
 // Configurar Cloudinary
 cloudinary.config({
@@ -19,117 +27,82 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Configuración de almacenamiento para multer y cloudinary
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'sabores-de-quito',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif']
-  }
-});
+// Configurar multer (almacenamiento en memoria)
+const upload = multer({ storage: multer.memoryStorage() });
 
-const upload = multer({ storage: multer.memoryStorage() }); // Almacena en memoria
-
-// Conectar a MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Conectado a MongoDB'))
-.catch(err => console.error('Error en conexión a MongoDB:', err));
-
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Importar modelo y rutas
-const Resena = require('./models/Resena');
-const router = express.Router();
+// === RUTAS ===
 
-// Ruta POST para crear reseña con imagen en Cloudinary
-router.post('/resenas', upload.single('imagen'), async (req, res) => {
+// POST - Crear reseña con imagen en Cloudinary
+app.post('/api/resenas', upload.single('imagen'), async (req, res) => {
   try {
     let imagenUrl = null;
 
     if (req.file) {
-      const result = await cloudinary.uploader.upload_stream(
-        { folder: 'sabores-de-quito' },
-        async (error, result) => {
-          if (error) {
-            console.error('Error subiendo a Cloudinary:', error);
-            return res.status(500).json({ mensaje: 'Error al subir imagen' });
+      const buffer = req.file.buffer;
+
+      const uploadResult = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'sabores-de-quito' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
           }
-
-          imagenUrl = result.secure_url;
-
-          const nuevaResena = new Resena({
-            nombre: req.body.nombre,
-            direccion: req.body.direccion,
-            comentario: req.body.comentario,
-            puntuacion: Number(req.body.puntuacion),
-            imagen: imagenUrl
-          });
-
-          const guardada = await nuevaResena.save();
-          res.status(201).json(guardada);
-        }
-      );
-
-      // Enviar el archivo a través del stream
-      result.end(req.file.buffer);
-    } else {
-      // Sin imagen
-      const nuevaResena = new Resena({
-        nombre: req.body.nombre,
-        direccion: req.body.direccion,
-        comentario: req.body.comentario,
-        puntuacion: Number(req.body.puntuacion),
-        imagen: null
+        );
+        streamifier.createReadStream(buffer).pipe(stream);
       });
 
-      const guardada = await nuevaResena.save();
-      res.status(201).json(guardada);
+      imagenUrl = uploadResult.secure_url;
     }
+
+    const nuevaResena = new Resena({
+      nombre: req.body.nombre,
+      direccion: req.body.direccion,
+      comentario: req.body.comentario,
+      puntuacion: Number(req.body.puntuacion),
+      imagen: imagenUrl
+    });
+
+    const guardada = await nuevaResena.save();
+    res.status(201).json(guardada);
   } catch (error) {
-    console.error('Error general:', error);
-    res.status(500).json({ mensaje: 'Error interno del servidor' });
+    console.error('❌ Error al guardar reseña:', error);
+    res.status(500).json({ mensaje: 'Error al guardar reseña' });
   }
 });
 
-// Ruta GET para obtener todas las reseñas ordenadas por fecha descendente
-router.get('/resenas', async (req, res) => {
+// GET - Obtener todas las reseñas
+app.get('/api/resenas', async (req, res) => {
   try {
     const resenas = await Resena.find().sort({ fecha: -1 });
     res.json(resenas);
   } catch (error) {
-    console.error('Error obteniendo reseñas:', error);
+    console.error('❌ Error al obtener reseñas:', error);
     res.status(500).json({ mensaje: 'Error al obtener reseñas' });
   }
 });
 
-// Ruta DELETE para borrar todas las reseñas
-router.delete('/resenas', async (req, res) => {
+// DELETE - Borrar todas las reseñas
+app.delete('/api/resenas', async (req, res) => {
   try {
     await Resena.deleteMany({});
-    res.json({ mensaje: 'Todas las reseñas borradas correctamente' });
+    res.json({ mensaje: 'Todas las reseñas fueron borradas correctamente' });
   } catch (error) {
-    console.error('Error borrando reseñas:', error);
+    console.error('❌ Error al borrar reseñas:', error);
     res.status(500).json({ mensaje: 'Error al borrar reseñas' });
   }
 });
 
-app.use('/api', router);
-
-// Ruta principal que sirve el HTML principal
+// Ruta para servir el HTML
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'principal.html'));
 });
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
 });
