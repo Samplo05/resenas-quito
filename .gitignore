@@ -1,3 +1,25 @@
+# Ignorar entorno y secretos
 .env
+*.env
+
+# Ignorar dependencias
 node_modules/
+
+# Ignorar uploads locales
 uploads/
+
+# Ignorar lockfiles si usas solo uno
+yarn.lock
+package-lock.json
+
+# Ignorar archivos de logs
+npm-debug.log*
+logs/
+*.log
+
+# Evita subir sistema operativo
+.DS_Store
+Thumbs.db
+
+# Git archivos de configuración innecesarios
+*.swp

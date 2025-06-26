@@ -6,11 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('loader');
   let reseñas = [];
 
+  const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
+
   loader.style.display = 'flex';
 
+  // Cargar reseñas desde el backend
   async function cargarResenas() {
     try {
-      const resp = await fetch('/api/resenas');
+      const resp = await fetch(API_URL);
       if (!resp.ok) throw new Error('Error al cargar reseñas');
       reseñas = await resp.json();
       mostrarResenas(reseñas);
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Mostrar reseñas en pantalla
   function mostrarResenas(lista) {
     contenedorResenas.innerHTML = '';
     if (lista.length === 0) {
@@ -42,72 +46,88 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  filtro.addEventListener('change', () => {
-    const val = parseInt(filtro.value);
-    if (val === 0) {
-      mostrarResenas(reseñas);
-    } else {
-      const filtradas = reseñas.filter(r => parseInt(r.puntuacion) >= val);
-      mostrarResenas(filtradas);
-    }
-  });
-
-  form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(form); // Esto toma todos los inputs, incluyendo archivo si hay
-
-  try {
-    const resp = await fetch('/api/resenas', {
-      method: 'POST',
-      body: formData
+  // Filtro por puntuación
+  if (filtro) {
+    filtro.addEventListener('change', () => {
+      const val = parseInt(filtro.value);
+      if (val === 0) {
+        mostrarResenas(reseñas);
+      } else {
+        const filtradas = reseñas.filter(r => parseInt(r.puntuacion) >= val);
+        mostrarResenas(filtradas);
+      }
     });
-
-    if (!resp.ok) throw new Error('Error al enviar la reseña');
-
-    const nuevaResena = await resp.json();
-    reseñas.push(nuevaResena);
-    mostrarResenas(reseñas);
-    form.reset();
-    alert('Reseña enviada correctamente');
-  } catch (error) {
-    console.error(error);
-    alert('Error al enviar la reseña');
   }
-});
 
+  // Enviar nueva reseña
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form); // Incluye imagen si hay
 
-  toggleOscuro.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-  });
+      try {
+        const resp = await fetch(API_URL, {
+          method: 'POST',
+          body: formData
+        });
 
-  document.getElementById('exportarJSON').addEventListener('click', () => {
-    const dataStr = JSON.stringify(reseñas, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+        if (!resp.ok) throw new Error('Error al enviar la reseña');
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'resenas_quito.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+        const nuevaResena = await resp.json();
+        reseñas.unshift(nuevaResena);
+        mostrarResenas(reseñas);
+        form.reset();
+        alert('Reseña enviada correctamente');
+      } catch (error) {
+        console.error(error);
+        alert('Error al enviar la reseña');
+      }
+    });
+  }
 
-  document.getElementById('borrarTodo').addEventListener('click', async () => {
-    if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
+  // Modo oscuro
+  if (toggleOscuro) {
+    toggleOscuro.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  }
 
-    try {
-      const resp = await fetch('/api/resenas', { method: 'DELETE' });
-      if (!resp.ok) throw new Error('Error borrando reseñas');
-      reseñas = [];
-      mostrarResenas(reseñas);
-      alert('Todas las reseñas fueron borradas');
-    } catch (error) {
-      console.error(error);
-      alert('Error al borrar reseñas');
-    }
-  });
+  // Exportar JSON
+  const btnExportar = document.getElementById('exportarJSON');
+  if (btnExportar) {
+    btnExportar.addEventListener('click', () => {
+      const dataStr = JSON.stringify(reseñas, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
 
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'resenas_quito.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // Borrar todas las reseñas (requiere endpoint DELETE /api/resenas)
+  const btnBorrar = document.getElementById('borrarTodo');
+  if (btnBorrar) {
+    btnBorrar.addEventListener('click', async () => {
+      if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
+
+      try {
+        const resp = await fetch(API_URL, { method: 'DELETE' });
+        if (!resp.ok) throw new Error('Error borrando reseñas');
+        reseñas = [];
+        mostrarResenas(reseñas);
+        alert('Todas las reseñas fueron borradas');
+      } catch (error) {
+        console.error(error);
+        alert('Error al borrar reseñas');
+      }
+    });
+  }
+
+  // Iniciar carga
   cargarResenas();
 
   window.addEventListener('load', () => {

@@ -3,29 +3,27 @@ const router = express.Router();
 const multer = require('multer');
 const Resena = require('../models/Resena');
 
-// Configuración de almacenamiento para imágenes
+// Configuración multer
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Carpeta donde se guardan las imágenes
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     const extension = file.originalname.split('.').pop();
-    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + extension);
+    cb(null, `${file.fieldname}-${uniqueSuffix}.${extension}`);
   }
 });
+const upload = multer({ storage });
 
-const upload = multer({ storage: storage });
-
-
-// ✅ POST - Guardar nueva reseña
+// POST - Crear reseña con imagen opcional
 router.post('/', upload.single('imagen'), async (req, res) => {
   try {
     const nuevaResena = new Resena({
       nombre: req.body.nombre,
       direccion: req.body.direccion,
       comentario: req.body.comentario,
-      puntuacion: req.body.puntuacion,
+      puntuacion: Number(req.body.puntuacion), // convertir a número
       imagen: req.file ? `/uploads/${req.file.filename}` : null
     });
 
@@ -37,11 +35,10 @@ router.post('/', upload.single('imagen'), async (req, res) => {
   }
 });
 
-
-// ✅ GET - Obtener todas las reseñas
+// GET - Obtener todas las reseñas ordenadas por fecha
 router.get('/', async (req, res) => {
   try {
-    const resenas = await Resena.find().sort({ createdAt: -1 });
+    const resenas = await Resena.find().sort({ fecha: -1 }); // usa fecha
     res.json(resenas);
   } catch (error) {
     console.error('Error al obtener reseñas:', error);
@@ -49,11 +46,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-// ✅ DELETE - Borrar una reseña por ID
+// DELETE - Borrar reseña por ID con validación simple
 router.delete('/:id', async (req, res) => {
   try {
-    const borrada = await Resena.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ mensaje: 'ID inválido' });
+    }
+
+    const borrada = await Resena.findByIdAndDelete(id);
     if (!borrada) {
       return res.status(404).json({ mensaje: 'Reseña no encontrada' });
     }
