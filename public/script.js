@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const API_URL = 'https://resenas-quito.onrender.com/api/resenas'; // <-- Cambia a tu URL real
+
   const form = document.getElementById('form-recomendacion');
   const contenedorResenas = document.querySelector('.resenas-contenedor');
   const filtro = document.getElementById('filtroPuntuacion');
@@ -6,13 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('loader');
   let reseñas = [];
 
-  // Mostrar loader hasta que se carguen reseñas
   loader.style.display = 'flex';
 
-  // Cargar reseñas desde backend
   async function cargarResenas() {
     try {
-      const resp = await fetch('/api/resenas'); // Ajusta URL si es necesario
+      const resp = await fetch(API_URL);
       if (!resp.ok) throw new Error('Error al cargar reseñas');
       reseñas = await resp.json();
       mostrarResenas(reseñas);
@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Mostrar reseñas en el DOM
   function mostrarResenas(lista) {
     contenedorResenas.innerHTML = '';
     if (lista.length === 0) {
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const article = document.createElement('article');
       article.classList.add('resena');
       article.innerHTML = `
-        <img src="${resena.imagen}" alt="Foto del lugar" />
+        <img src="${resena.imagen || 'imagenes/default.jpg'}" alt="Foto del lugar" />
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${resena.direccion}</p>
         <p><strong>Comentario:</strong> ${resena.comentario}</p>
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Filtrar reseñas por puntuación
   filtro.addEventListener('change', () => {
     const val = parseInt(filtro.value);
     if (val === 0) {
@@ -56,22 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Enviar formulario con imagen y datos
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
 
     try {
-      const resp = await fetch('/api/resenas', {
+      const resp = await fetch(API_URL, {
         method: 'POST',
         body: formData
       });
       if (!resp.ok) throw new Error('Error al enviar la reseña');
 
       const nuevaResena = await resp.json();
-
-      // Actualizar array y mostrar nueva reseña
       reseñas.push(nuevaResena);
       mostrarResenas(reseñas);
       form.reset();
@@ -82,12 +77,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Modo oscuro
+  // Aquí revisa si tienes ruta DELETE sin id para borrar todas, si no, mejor comentar esta parte
+  /*
+  document.getElementById('borrarTodo').addEventListener('click', async () => {
+    if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
+
+    try {
+      const resp = await fetch(API_URL, { method: 'DELETE' });
+      if (!resp.ok) throw new Error('Error borrando reseñas');
+
+      reseñas = [];
+      mostrarResenas(reseñas);
+      alert('Todas las reseñas fueron borradas');
+    } catch (error) {
+      console.error(error);
+      alert('Error al borrar reseñas');
+    }
+  });
+  */
+
   toggleOscuro.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
   });
 
-  // Exportar reseñas como JSON
   document.getElementById('exportarJSON').addEventListener('click', () => {
     const dataStr = JSON.stringify(reseñas, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
@@ -100,27 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     URL.revokeObjectURL(url);
   });
 
-  // Borrar todas las reseñas
-  document.getElementById('borrarTodo').addEventListener('click', async () => {
-    if (!confirm('¿Estás seguro de borrar todas las reseñas?')) return;
-
-    try {
-      const resp = await fetch('/api/resenas', { method: 'DELETE' });
-      if (!resp.ok) throw new Error('Error borrando reseñas');
-
-      reseñas = [];
-      mostrarResenas(reseñas);
-      alert('Todas las reseñas fueron borradas');
-    } catch (error) {
-      console.error(error);
-      alert('Error al borrar reseñas');
-    }
-  });
-
-  // Iniciar carga de reseñas
   cargarResenas();
 
-  // Loader oculto cuando la ventana cargue completamente
   window.addEventListener('load', () => {
     loader.style.display = 'none';
   });
