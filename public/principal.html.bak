@@ -20,29 +20,30 @@
   <main>
     <section id="formulario">
       <h2>Completa la información del nuevo lugar</h2>
-      <form id="nuevoLugarForm">
-  <label for="nombre">Nombre del lugar:</label>
-  <input type="text" id="nombre" name="nombre" required />
+      <form id="form-recomendacion" enctype="multipart/form-data">
+        <label for="nombre">Nombre del lugar:</label>
+        <input type="text" id="nombre" name="nombre" required />
 
-  <label for="direccion">Dirección:</label>
-  <input type="text" id="direccion" name="direccion" required />
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" required />
 
-  <!-- Los siguientes campos aún NO se guardan, así que los quitamos por ahora -->
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentario" required></textarea>
 
-  <label for="comentario">Comentario:</label>
-  <textarea id="comentario" name="comentario" required></textarea>
+        <label for="puntuacion">Puntuación:</label>
+        <select id="puntuacion" name="puntuacion" required>
+          <option value="1">⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
 
-  <label for="puntuacion">Puntuación:</label>
-  <select id="puntuacion" name="puntuacion" required>
-    <option value="1">⭐</option>
-    <option value="2">⭐⭐</option>
-    <option value="3">⭐⭐⭐</option>
-    <option value="4">⭐⭐⭐⭐</option>
-    <option value="5">⭐⭐⭐⭐⭐</option>
-  </select>
+        <label for="imagen">Imagen del lugar:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" />
 
-  <button type="submit">Guardar Lugar</button>
-</form>
+        <button type="submit">Guardar Lugar</button>
+      </form>
     </section>
   </main>
 
@@ -51,27 +52,27 @@
   </footer>
 
   <script>
-    document.getElementById('nuevoLugarForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
+  document.getElementById('form-recomendacion').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form); // FormData incluye archivos
 
-      try {
-        const response = await fetch('https://tu-backend.com/api/guardar', {
-          method: 'POST',
-          body: formData
-        });
+    try {
+      const response = await fetch('https://resenas-quito.onrender.com/api/resenas', {
+        method: 'POST',
+        body: formData // Sin headers, fetch detecta multipart/form-data automáticamente
+      });
 
-        if (response.ok) {
-          alert('Lugar guardado exitosamente');
-          form.reset();
-        } else {
-          alert('Hubo un error al guardar el lugar');
-        }
-      } catch (err) {
-        alert('Error de conexión: ' + err.message);
+      if (response.ok) {
+        alert('Lugar guardado exitosamente');
+        form.reset();
+      } else {
+        alert('Hubo un error al guardar el lugar');
       }
-    });
+    } catch (err) {
+      alert('Error de conexión: ' + err.message);
+    }
+  });
   </script>
 </body>
 </html>

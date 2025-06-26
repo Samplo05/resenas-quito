@@ -55,20 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const datos = {
-      nombre: form.nombre.value,
-      direccion: form.direccion.value,
-      comentario: form.comentario.value,
-      puntuacion: form.puntuacion.value
-    };
+    const formData = new FormData(form); // <-- Aquí se envía el form con archivos
 
     try {
       const resp = await fetch('/api/resenas', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
+        body: formData
       });
 
       if (!resp.ok) throw new Error('Error al enviar la reseña');
