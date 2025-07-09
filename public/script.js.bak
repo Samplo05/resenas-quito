@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
 
-  loader.style.display = 'flex';
+  if (loader) loader.style.display = 'flex';
 
   // Cargar reseñas desde el backend
   async function cargarResenas() {
@@ -16,17 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const resp = await fetch(API_URL);
       if (!resp.ok) throw new Error('Error al cargar reseñas');
       reseñas = await resp.json();
-      mostrarResenas(reseñas);
+      if (contenedorResenas) mostrarResenas(reseñas);
     } catch (error) {
       console.error(error);
-      contenedorResenas.innerHTML = '<p>Error cargando reseñas.</p>';
+      if (contenedorResenas)
+        contenedorResenas.innerHTML = '<p>Error cargando reseñas.</p>';
     } finally {
-      loader.style.display = 'none';
+      if (loader) loader.style.display = 'none';
     }
   }
 
   // Mostrar reseñas en pantalla
   function mostrarResenas(lista) {
+    if (!contenedorResenas) return;
     contenedorResenas.innerHTML = '';
     if (lista.length === 0) {
       contenedorResenas.innerHTML = '<p>No hay reseñas para mostrar.</p>';
@@ -108,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Borrar todas las reseñas (requiere endpoint DELETE /api/resenas)
+  // Borrar todas las reseñas
   const btnBorrar = document.getElementById('borrarTodo');
   if (btnBorrar) {
     btnBorrar.addEventListener('click', async () => {
@@ -131,6 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarResenas();
 
   window.addEventListener('load', () => {
-    loader.style.display = 'none';
+    if (loader) loader.style.display = 'none';
   });
 });

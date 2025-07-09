@@ -28,25 +28,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mostrar reseñas en pantalla
   function mostrarResenas(lista) {
-    if (!contenedorResenas) return;
-    contenedorResenas.innerHTML = '';
-    if (lista.length === 0) {
-      contenedorResenas.innerHTML = '<p>No hay reseñas para mostrar.</p>';
-      return;
-    }
-    lista.forEach(resena => {
-      const article = document.createElement('article');
-      article.classList.add('resena');
-      article.innerHTML = `
+  contenedorResenas.innerHTML = '';
+  if (lista.length === 0) {
+    contenedorResenas.innerHTML = '<p>No hay reseñas para mostrar.</p>';
+    return;
+  }
+  lista.forEach(resena => {
+    const resumenComentario = resena.comentario.length > 100
+      ? resena.comentario.substring(0, 100) + '...'
+      : resena.comentario;
+
+    const article = document.createElement('article');
+    article.classList.add('resena');
+    article.innerHTML = `
+      <a href="resena.html?id=${resena._id}">
         ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${resena.direccion}</p>
-        <p><strong>Comentario:</strong> ${resena.comentario}</p>
+        <p><strong>Comentario:</strong> ${resumenComentario}</p>
         <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
-      `;
-      contenedorResenas.appendChild(article);
-    });
-  }
+      </a>
+    `;
+    contenedorResenas.appendChild(article);
+  });
+}
+
 
   // Filtro por puntuación
   if (filtro) {
