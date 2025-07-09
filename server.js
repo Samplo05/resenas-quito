@@ -4,100 +4,87 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const { v2: cloudinary } = require('cloudinary');
-const streamifier = require('streamifier');
-const Resena = require('./models/Resena');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ Conectado a MongoDB'))
-.catch(err => console.error('❌ Error en conexión a MongoDB:', err));
-
-// Configurar Cloudinary
+// Configuración Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key:    process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Configurar multer (almacenamiento en memoria)
-const upload = multer({ storage: multer.memoryStorage() });
+// Multer + Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'sabores-de-quito',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+  },
+});
+const upload = multer({ storage });
 
+// MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('✅ Conectado a MongoDB'))
+.catch((err) => console.error('❌ Error de conexión:', err));
+
+// Model
+const Resena = require('./models/Resena');
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// === RUTAS ===
-
-// POST - Crear reseña con imagen en Cloudinary
+// API
 app.post('/api/resenas', upload.single('imagen'), async (req, res) => {
   try {
-    let imagenUrl = null;
-
-    if (req.file) {
-      const buffer = req.file.buffer;
-
-      const uploadResult = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: 'sabores-de-quito' },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        );
-        streamifier.createReadStream(buffer).pipe(stream);
-      });
-
-      imagenUrl = uploadResult.secure_url;
-    }
-
     const nuevaResena = new Resena({
       nombre: req.body.nombre,
       direccion: req.body.direccion,
       comentario: req.body.comentario,
       puntuacion: Number(req.body.puntuacion),
-      imagen: imagenUrl
+      imagen: req.file ? req.file.path : null,
     });
-
     const guardada = await nuevaResena.save();
     res.status(201).json(guardada);
   } catch (error) {
-    console.error('❌ Error al guardar reseña:', error);
+    console.error('Error al guardar reseña:', error);
     res.status(500).json({ mensaje: 'Error al guardar reseña' });
   }
 });
 
-// GET - Obtener todas las reseñas
 app.get('/api/resenas', async (req, res) => {
   try {
     const resenas = await Resena.find().sort({ fecha: -1 });
     res.json(resenas);
   } catch (error) {
-    console.error('❌ Error al obtener reseñas:', error);
+    console.error('Error al obtener reseñas:', error);
     res.status(500).json({ mensaje: 'Error al obtener reseñas' });
   }
 });
 
-// DELETE - Borrar todas las reseñas
 app.delete('/api/resenas', async (req, res) => {
   try {
     await Resena.deleteMany({});
-    res.json({ mensaje: 'Todas las reseñas fueron borradas correctamente' });
+    res.json({ mensaje: 'Todas las reseñas fueron borradas' });
   } catch (error) {
-    console.error('❌ Error al borrar reseñas:', error);
+    console.error('Error al borrar reseñas:', error);
     res.status(500).json({ mensaje: 'Error al borrar reseñas' });
   }
 });
 
-// Ruta para servir el HTML
+// Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'principal.html'));
 });

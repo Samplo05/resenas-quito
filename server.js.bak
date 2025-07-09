@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const multer = require('multer');
 const { v2: cloudinary } = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 const streamifier = require('streamifier');
 const Resena = require('./models/Resena');
 
@@ -20,12 +22,23 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('✅ Conectado a MongoDB'))
 .catch(err => console.error('❌ Error en conexión a MongoDB:', err));
 
-// Configurar Cloudinary
+// Configuración Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key:    process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+// ⚠️ FIX para el error de "not a constructor"
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'sabores-de-quito',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+  },
+});
+
+const upload = multer({ storage });
 
 // Configurar multer (almacenamiento en memoria)
 const upload = multer({ storage: multer.memoryStorage() });

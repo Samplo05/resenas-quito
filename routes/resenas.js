@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { v2: cloudinary } = require('cloudinary');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary').v2;
 const Resena = require('../models/Resena');
 
 // Configurar Cloudinary con variables de entorno
@@ -13,34 +13,31 @@ cloudinary.config({
 });
 
 // Configurar almacenamiento en Cloudinary
-const storage = new CloudinaryStorage({
+const storage = new cloudinaryStorage.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'sabores-quito',
-    allowed_formats: ['jpg', 'jpeg', 'png'],
-    transformation: [{ width: 800, crop: 'limit' }]
-  }
+    folder: 'sabores-de-quito',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+  },
 });
+
 
 const upload = multer({ storage });
 
 // ✅ POST - Crear nueva reseña con imagen
-router.post('/', upload.single('imagen'), async (req, res) => {
-  try {
-    const nuevaResena = new Resena({
-      nombre: req.body.nombre,
-      direccion: req.body.direccion,
-      comentario: req.body.comentario,
-      puntuacion: Number(req.body.puntuacion),
-      imagen: req.file ? req.file.path : null // URL de Cloudinary
-    });
+router.post('/resenas', upload.single('imagen'), async (req, res) => {
+  const imagenUrl = req.file ? req.file.path : null;
 
-    const guardada = await nuevaResena.save();
-    res.status(201).json(guardada);
-  } catch (error) {
-    console.error('Error al guardar reseña:', error);
-    res.status(500).json({ mensaje: 'Error al guardar reseña' });
-  }
+  const nuevaResena = new Resena({
+    nombre: req.body.nombre,
+    direccion: req.body.direccion,
+    comentario: req.body.comentario,
+    puntuacion: Number(req.body.puntuacion),
+    imagen: imagenUrl
+  });
+
+  const guardada = await nuevaResena.save();
+  res.status(201).json(guardada);
 });
 
 // ✅ GET - Obtener todas las reseñas
