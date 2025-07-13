@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalle de Reseña</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Detalle del Lugar</h1>
+  </header>
+
+  <main id="detalle-resena">
+    <p>Cargando reseña...</p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const contenedor = document.getElementById('detalle-resena');
+
+    async function cargarDetalle() {
+      try {
+        const resp = await fetch(`https://resenas-quito.onrender.com/api/resenas/${id}`);
+        if (!resp.ok) throw new Error('Error al obtener la reseña');
+        const resena = await resp.json();
+
+        contenedor.innerHTML = `
+          ${resena.imagen ? `<img src="${resena.imagen}" alt="Imagen del lugar">` : ''}
+          <h2>${resena.nombre}</h2>
+          <p><strong>Dirección:</strong> ${resena.direccion}</p>
+          <p><strong>Comentario:</strong> ${resena.comentario}</p>
+          <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
+        `;
+      } catch (error) {
+        contenedor.innerHTML = '<p>Error al mostrar la reseña</p>';
+        console.error(error);
+      }
+    }
+
+    cargarDetalle();
+  </script>
+</body>
+</html>

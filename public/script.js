@@ -37,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${resena.direccion}</p>
-        <p><strong>Comentario:</strong> ${resena.comentario}</p>
+        <p><strong>Comentario:</strong> ${resena.comentario.length > 100 
+  ? resena.comentario.substring(0, 100) + '... <a href="resena.html?id=' + resena._id + '">Ver más</a>' 
+  : resena.comentario}</p>
         <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
       `;
       contenedorResenas.appendChild(article);

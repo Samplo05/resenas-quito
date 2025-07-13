@@ -93,3 +93,18 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
 });
+
+// Obtener una reseña específica por ID
+router.get('/resenas/:id', async (req, res) => {
+  try {
+    const resena = await Resena.findById(req.params.id);
+    if (!resena) {
+      return res.status(404).json({ mensaje: 'Reseña no encontrada' });
+    }
+    res.json(resena);
+  } catch (error) {
+    console.error('Error al obtener reseña:', error);
+    res.status(500).json({ mensaje: 'Error al obtener la reseña' });
+  }
+});
+
