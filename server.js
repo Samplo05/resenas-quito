@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
@@ -39,6 +40,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Model
 const Resena = require('./models/Resena');
+const router = express.Router(); // Creo que es esto
+
 
 // Middleware
 app.use(cors());
