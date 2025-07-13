@@ -57,7 +57,7 @@
       try {
         if (!id) throw new Error('No se proporcionó ID');
 
-        const resp = await fetch(`https://resenas-quito.onrender.com/api/resenas/{id}`);
+        const resp = await fetch('https://resenas-quito.onrender.com/api/resenas/{id}');
         if (!resp.ok) throw new Error('Error al obtener la reseña');
 
         const resena = await resp.json();
