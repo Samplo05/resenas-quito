@@ -1,0 +1,27 @@
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  if (!id) {
+    document.body.innerHTML = '<p>Reseña no encontrada</p>';
+    return;
+  }
+
+  try {
+    const resp = await fetch(`https://resenas-quito.onrender.com/api/resenas/${id}`);
+    if (!resp.ok) throw new Error('No se pudo cargar la reseña');
+    const resena = await resp.json();
+
+    const contenedor = document.getElementById('detalle-resena');
+    contenedor.innerHTML = `
+      <h2>${resena.nombre}</h2>
+      ${resena.imagen ? `<img src="${resena.imagen}" alt="Imagen del lugar">` : ''}
+      <p><strong>Dirección:</strong> ${resena.direccion}</p>
+      <p><strong>Comentario:</strong> ${resena.comentario}</p>
+      <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
+    `;
+  } catch (error) {
+    console.error(error);
+    document.body.innerHTML = '<p>Error cargando la reseña</p>';
+  }
+});

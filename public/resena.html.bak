@@ -56,11 +56,8 @@
 
     async function cargarDetalle() {
       try {
-        if (!id) throw new Error('No se proporcionó ID');
-
         const resp = await fetch(`https://resenas-quito.onrender.com/api/resenas/${id}`);
         if (!resp.ok) throw new Error('Error al obtener la reseña');
-
         const resena = await resp.json();
 
         contenedor.innerHTML = `
@@ -72,8 +69,8 @@
           <a class="volver" href="principal.html">← Volver a todas las reseñas</a>
         `;
       } catch (error) {
+        contenedor.innerHTML = '<p>Error al mostrar la reseña</p>';
         console.error(error);
-        contenedor.innerHTML = '<p>Error al mostrar la reseña. Verifica que el enlace sea correcto.</p>';
       }
     }
 
