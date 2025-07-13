@@ -1,51 +1,14 @@
+// models/Resena.js
 const mongoose = require('mongoose');
 
 const ResenaSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   direccion: { type: String, required: true },
+  horario: { type: String, required: true },
   comentario: { type: String, required: true },
   puntuacion: { type: Number, min: 1, max: 5, required: true },
-  imagen: { type: String }, // Puede ser una URL o base64
+  imagen: { type: String }, // Puede ser URL o base64
   fecha: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Resena', ResenaSchema);
-
-
-// routes/api.js
-const express = require('express');
-const router = express.Router();
-const Resena = require('../models/Resena');
-
-// Obtener todas las reseñas
-router.get('/resenas', async (req, res) => {
-  try {
-    const resenas = await Resena.find().sort({ fecha: -1 });
-    res.json(resenas);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al obtener reseñas' });
-  }
-});
-
-// Crear nueva reseña
-router.post('/resenas', async (req, res) => {
-  try {
-    const nueva = new Resena(req.body);
-    await nueva.save();
-    res.status(201).json(nueva);
-  } catch (err) {
-    res.status(400).json({ error: 'Error al guardar la reseña' });
-  }
-});
-
-// Eliminar una reseña por ID
-router.delete('/resenas/:id', async (req, res) => {
-  try {
-    await Resena.findByIdAndDelete(req.params.id);
-    res.json({ mensaje: 'Reseña eliminada' });
-  } catch (err) {
-    res.status(400).json({ error: 'Error al eliminar la reseña' });
-  }
-});
-
-module.exports = router;

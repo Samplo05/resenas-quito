@@ -18,7 +18,9 @@
   </header>
 
   <main>
-     <section id="filtros">
+    
+
+    <section id="filtros">
       <label for="filtroPuntuacion">Filtrar por puntuación mínima:</label>
       <select id="filtroPuntuacion" name="filtroPuntuacion">
         <option value="0">Todas</option>
@@ -32,7 +34,18 @@
       <label for="modoOscuroToggle">Modo oscuro:</label>
       <input type="checkbox" id="modoOscuroToggle" />
     </section>
-<section id="formulario">
+
+    <section id="reseñas">
+      <h2>Reseñas</h2>
+      <div id="loader" style="display:none;">Cargando reseñas...</div>
+      <div class="resenas-contenedor"></div>
+    </section>
+
+    <section id="acciones">
+      <button id="exportarJSON">Exportar reseñas a JSON</button>
+      <button id="borrarTodo">Borrar todas las reseñas</button>
+    </section>
+	<section id="formulario">
       <h2>Agregar nueva reseña</h2>
       <form id="form-recomendacion" enctype="multipart/form-data">
   <label for="nombre">Nombre del lugar:</label>
@@ -58,17 +71,6 @@
 
   <button type="submit">Guardar Lugar</button>
 </form>
-    </section>
-
-    <section id="reseñas">
-      <h2>Reseñas</h2>
-      <div id="loader" style="display:none;">Cargando reseñas...</div>
-      <div class="resenas-contenedor"></div>
-    </section>
-
-    <section id="acciones">
-      <button id="exportarJSON">Exportar reseñas a JSON</button>
-      <button id="borrarTodo">Borrar todas las reseñas</button>
     </section>
   </main>
 
