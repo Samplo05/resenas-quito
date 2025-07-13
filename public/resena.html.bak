@@ -4,33 +4,6 @@
   <meta charset="UTF-8" />
   <title>Detalle de Reseña</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    main {
-      max-width: 600px;
-      margin: auto;
-      padding: 1rem;
-    }
-
-    .volver {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.5rem 1rem;
-      background-color: #bb3e03;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .volver:hover {
-      background-color: #9c3100;
-    }
-
-    img {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-bottom: 1rem;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -58,7 +31,6 @@
           <p><strong>Dirección:</strong> ${resena.direccion}</p>
           <p><strong>Comentario:</strong> ${resena.comentario}</p>
           <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
-          <a class="volver" href="principal.html">← Volver a todas las reseñas</a>
         `;
       } catch (error) {
         contenedor.innerHTML = '<p>Error al mostrar la reseña</p>';
