@@ -53,29 +53,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mostrar reseñas
   function mostrarReseñas(lista) {
-    contenedor.innerHTML = '';
-    if (lista.length === 0) {
-      contenedor.innerHTML = '<p>No hay coincidencias.</p>';
-      return;
-    }
-
-    lista.forEach(r => {
-      const div = document.createElement('div');
-      div.classList.add('resena');
-
-      const estrellas = Number(r.puntuacion) || 0;
-
-      div.innerHTML = `
-        <h3>${r.nombre || 'Sin título'}</h3>
-        <p><strong>Comentario:</strong> ${r.comentario || 'Sin comentario'}</p>
-        <p><strong>Estrellas:</strong> ${'⭐'.repeat(estrellas)}</p>
-        ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}">` : ''}
-        <p><strong>Dirección:</strong> ${r.direccion || 'No disponible'}</p>
-      `;
-
-      contenedor.appendChild(div);
-    });
+  contenedor.innerHTML = '';
+  if (lista.length === 0) {
+    contenedor.innerHTML = '<p>No hay coincidencias.</p>';
+    return;
   }
+
+  lista.forEach(r => {
+    const div = document.createElement('div');
+    div.classList.add('resena');
+
+    div.innerHTML = `
+      <h3>${r.nombre}</h3>
+      <p><strong>Usuario:</strong> ${r.nombre}</p>
+      <p><strong>Comentario:</strong> ${r.comentario}</p>
+      <p><strong>Estrellas:</strong> ${'⭐'.repeat(r.puntuacion)}</p>
+      ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}">` : ''}
+      <p><strong>Dirección:</strong> ${r.direccion || 'No disponible'}</p>
+      <button class="eliminar-btn" data-id="${r._id}">🗑️ Eliminar</button>
+    `;
+
+    contenedor.appendChild(div);
+  });
+
+  // Agregar eventos a los botones de eliminar
+  document.querySelectorAll('.eliminar-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const id = e.target.getAttribute('data-id');
+      if (confirm('¿Estás seguro de eliminar esta reseña?')) {
+        try {
+          const res = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE'
+          });
+          if (res.ok) {
+            // Eliminar del array local y recargar vista
+            reseñas = reseñas.filter(r => r._id !== id);
+            mostrarReseñas(reseñas);
+            calcularPromedio(reseñas);
+          } else {
+            alert('Error al eliminar la reseña.');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Error al conectar con el servidor.');
+        }
+      }
+    });
+  });
+}
+
 
   // Calcular promedio
   function calcularPromedio(lista) {

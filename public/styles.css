@@ -296,5 +296,28 @@ body.resenas-detalle .resenas-contenedor {
   flex-direction: column;
   gap: 20px;
 }
+.eliminar-btn {
+  background-color: #da6778;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.eliminar-btn:hover {
+  background-color: #c0484a;
+}
+
+body.dark-mode .eliminar-btn {
+  background-color: #af3b3b;
+}
+
+body.dark-mode .eliminar-btn:hover {
+  background-color: #992e2e;
+}
 
 
