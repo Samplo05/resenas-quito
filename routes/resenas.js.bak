@@ -25,7 +25,7 @@ const storage = new cloudinaryStorage.CloudinaryStorage({
 const upload = multer({ storage });
 
 // ✅ POST - Crear nueva reseña con imagen
-router.post('/resenas', upload.single('imagen'), async (req, res) => {
+router.post('/', upload.single('imagen'), async (req, res) => {
   const imagenUrl = req.file ? req.file.path : null;
 
   const nuevaResena = new Resena({
