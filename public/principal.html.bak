@@ -39,8 +39,8 @@
     <option value="5">⭐⭐⭐⭐⭐</option>
   </select>
 
-  <!--label for="imagen">Imagen:</label>
-  <input type="file" name="imagen" accept="image/*" /-->
+  <label for="imagen">Imagen:</label>
+  <input type="file" name="imagen" accept="image/*" />
 
   <button type="submit">Guardar Lugar</button>
 </form>

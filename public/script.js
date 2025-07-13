@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function recortarTexto(texto, max) {
-    return texto.length > max ? texto.slice(0, max) + '... <em>(Ver más)</em>' : texto;
+    return texto.length > max ? texto.slice(0, max) + '[...] </em>' : texto;
   }
 
   function mostrarResenas(lista) {
@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
       article.classList.add('resena');
 
       const comentarioCorto = recortarTexto(resena.comentario, 120); // recorta si pasa de 120 caracteres
+      const direccionCorta = recortarTexto(resena.direccion, 120); // recorta si pasa de 120 caracteres	  
 
       article.innerHTML = `
         ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
         <h3>${resena.nombre}</h3>
-        <p><strong>Dirección:</strong> ${resena.direccion}</p>
-        <p><strong>Comentario:</strong> ${comentarioCorto}</p>
+        <p><strong>Dirección:</strong> ${direccionCorta}</p>
+        
 		<p><strong>Comentario:</strong> ${resena.comentario.length > 100 
   ? resena.comentario.substring(0, 100) + '... <a href="resena.html?id=' + resena._id + '">Ver más</a>' 
   : resena.comentario}</p>

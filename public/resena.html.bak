@@ -57,7 +57,7 @@
       try {
         if (!id) throw new Error('No se proporcionó ID');
 
-        const resp = await fetch(`https://resenas-quito.onrender.com/api/resenas/{id}`);
+        const resp = await fetch('https://resenas-quito.onrender.com/api/resenas/{id}');
         if (!resp.ok) throw new Error('Error al obtener la reseña');
 
         const resena = await resp.json();
@@ -65,7 +65,7 @@
         contenedor.innerHTML = `
           ${resena.imagen ? `<img src="${resena.imagen}" alt="Imagen del lugar">` : ''}
           <h2>${resena.nombre}</h2>
-          <p><strong>Dirección:</strong> ${resena.direccion}</p>
+          <p><strong>Detalles:</strong> ${resena.direccion}</p>
           <p><strong>Comentario:</strong> ${resena.comentario}</p>
           <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
           <a class="volver" href="principal.html">← Volver a todas las reseñas</a>
