@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filtro = document.getElementById('filtroPuntuacion');
   const toggleOscuro = document.getElementById('modoOscuroToggle');
   const loader = document.getElementById('loader');
-  const API_URL = 'https://resenas-quito.onrender.com/api/resenas ';
+  const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
   let reseñas = [];
 
   loader.style.display = 'flex';
@@ -45,8 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${resena.direccion}</p>
         <p><strong>Comentario:</strong> ${comentarioCorto}</p>
+		<p><strong>Comentario:</strong> ${resena.comentario.length > 100 
+  ? resena.comentario.substring(0, 100) + '... <a href="resena.html?id=' + resena._id + '">Ver más</a>' 
+  : resena.comentario}</p>
         <p><strong>Puntuación:</strong> ${'⭐'.repeat(resena.puntuacion)}</p>
-        <a href="resena.html?id=${resena._id}" class="ver-mas">Ver más</a>
       `;
 
       contenedorResenas.appendChild(article);
