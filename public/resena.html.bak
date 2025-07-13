@@ -10,6 +10,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Elsie:wght@400;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon" />
+  <style>
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    .volver {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1rem;
+      background-color: #bb3e03;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .volver:hover {
+      background-color: #9c3100;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
   <header>
