@@ -48,11 +48,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-const resenasRoutes = require('./routes/resenas');
-app.use('/api', resenasRoutes);
+
 
 // API
-
+const resenasRoutes = require('./routes/resenas');
+app.use('/api/resenas', resenasRoutes);
 
 // Página principal
 app.get('/', (req, res) => {

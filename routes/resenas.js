@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { v2: cloudinary } = require('cloudinary');
-const cloudinaryStorage = require('multer-storage-cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Resena = require('../models/Resena');
 
-// Configurar Cloudinary con variables de entorno
+// Configurar Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Configurar almacenamiento en Cloudinary
-const storage = new cloudinaryStorage.CloudinaryStorage({
+// Configurar almacenamiento
+const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'sabores-de-quito',
@@ -23,29 +23,23 @@ const storage = new cloudinaryStorage.CloudinaryStorage({
 
 const upload = multer({ storage });
 
-
-// ✅ POST /api/resenas — Crear nueva reseña con imagen
+// POST - Crear reseña
 router.post('/', upload.single('imagen'), async (req, res) => {
-  try {
-    const imagenUrl = req.file ? req.file.path : null;
+  const imagenUrl = req.file ? req.file.path : null;
 
-    const nuevaResena = new Resena({
-      nombre: req.body.nombre,
-      direccion: req.body.direccion,
-      comentario: req.body.comentario,
-      puntuacion: Number(req.body.puntuacion),
-      imagen: imagenUrl
-    });
+  const nuevaResena = new Resena({
+    nombre: req.body.nombre,
+    direccion: req.body.direccion,
+    comentario: req.body.comentario,
+    puntuacion: Number(req.body.puntuacion),
+    imagen: imagenUrl
+  });
 
-    const guardada = await nuevaResena.save();
-    res.status(201).json(guardada);
-  } catch (error) {
-    console.error('Error al guardar reseña:', error);
-    res.status(500).json({ mensaje: 'Error al guardar reseña' });
-  }
+  const guardada = await nuevaResena.save();
+  res.status(201).json(guardada);
 });
 
-// ✅ GET /api/resenas — Obtener todas las reseñas
+// GET - Obtener todas
 router.get('/', async (req, res) => {
   try {
     const resenas = await Resena.find().sort({ fecha: -1 });
@@ -56,7 +50,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ DELETE /api/resenas/:id — Eliminar una reseña por ID
+// DELETE - Eliminar una por ID
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -73,20 +67,6 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error al borrar reseña:', error);
     res.status(500).json({ mensaje: 'Error al borrar reseña' });
-  }
-});
-
-// ✅ GET /api/resenas/:id — Obtener una reseña específica por ID
-router.get('/:id', async (req, res) => {
-  try {
-    const resena = await Resena.findById(req.params.id);
-    if (!resena) {
-      return res.status(404).json({ mensaje: 'Reseña no encontrada' });
-    }
-    res.json(resena);
-  } catch (error) {
-    console.error('Error al obtener reseña:', error);
-    res.status(500).json({ mensaje: 'Error al obtener la reseña' });
   }
 });
 

@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     div.innerHTML = `
       <h3>${r.nombre}</h3>
+      <p><strong>Usuario:</strong> ${r.nombre}</p>
       <p><strong>Comentario:</strong> ${r.comentario}</p>
       <p><strong>Estrellas:</strong> ${'⭐'.repeat(r.puntuacion)}</p>
       ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}">` : ''}

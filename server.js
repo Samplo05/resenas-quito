@@ -28,6 +28,7 @@ const storage = new CloudinaryStorage({
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
   },
 });
+
 const upload = multer({ storage });
 
 // MongoDB
