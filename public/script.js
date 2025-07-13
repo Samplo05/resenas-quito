@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filtro = document.getElementById('filtroPuntuacion');
   const toggleOscuro = document.getElementById('modoOscuroToggle');
   const loader = document.getElementById('loader');
-  const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
+  const API_URL = 'https://resenas-quito.onrender.com/api/resenas ';
   let reseñas = [];
 
   loader.style.display = 'flex';

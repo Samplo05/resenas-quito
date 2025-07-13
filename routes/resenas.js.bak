@@ -31,7 +31,6 @@ router.post('/resenas', upload.single('imagen'), async (req, res) => {
   const nuevaResena = new Resena({
     nombre: req.body.nombre,
     direccion: req.body.direccion,
-    horario: req.body.horario,
     comentario: req.body.comentario,
     puntuacion: Number(req.body.puntuacion),
     imagen: imagenUrl

@@ -291,10 +291,16 @@ body.dark-mode h2 {
   color: #af3b3b;
   
 }
-body.resenas-detalle .resenas-contenedor {
+/* Estilo específico para resenas.html */
+body.pagina-resenas .resenas-contenedor {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
+body.pagina-resenas .resena {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
 
