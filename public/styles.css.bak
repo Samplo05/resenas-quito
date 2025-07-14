@@ -1,12 +1,11 @@
-/* --- Reset básico --- */
+/* === RESET BÁSICO === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
 
-/* --- Fuentes y cuerpo --- */
+/* === FUENTES Y CUERPO === */
 body {
   font-family: 'Elsie', sans-serif;
   line-height: 1.6;
@@ -14,8 +13,8 @@ body {
   color: #333;
   padding: 0 20px;
   min-height: 100vh;
-
 }
+
 body,
 .resena,
 form,
@@ -24,7 +23,7 @@ footer {
   transition: background-color 0.3s, color 0.3s, border 0.3s;
 }
 
-/* --- Header y navegación --- */
+/* === HEADER Y NAVEGACIÓN === */
 header {
   background: linear-gradient(to right, #68389c, #da6778);
   color: white;
@@ -35,13 +34,6 @@ header {
   gap: 15px;
   margin-bottom: 20px;
 }
-@media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
 
 #logo {
   height: 60px;
@@ -55,8 +47,14 @@ header h1 {
   margin-bottom: 5px;
 }
 
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 
-/* --- Secciones generales --- */
+/* === SECCIONES GENERALES === */
 section {
   margin: 40px 0;
 }
@@ -67,7 +65,7 @@ h2 {
   color: #6349b2;
 }
 
-/* --- Formulario --- */
+/* === FORMULARIO === */
 form {
   display: flex;
   flex-direction: column;
@@ -102,8 +100,7 @@ form button:hover {
   background: linear-gradient(to right, #9c383b, #9f67da);
 }
 
-/* --- Footer --- */
-/* --- Colores usados --- ff914d*/
+/* === FOOTER === */
 footer {
   background: linear-gradient(to right, #68389c, #da6778);
   color: white;
@@ -112,22 +109,31 @@ footer {
   margin-top: 40px;
 }
 
-/* --- Contenedor de reseñas --- */
+/* === CONTENEDOR DE RESEÑAS === */
 .resenas-contenedor {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
-/* --- Tarjetas de reseñas --- */
+body.resenas-detalle .resenas-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* === TARJETAS DE RESEÑAS === */
 .resena {
-  font-family:"Georgia", serif;
+  font-family: "Georgia", serif;
   background-color: white;
   border: 1px solid #eee;
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: entrada 0.5s ease forwards;
 }
 
 .resena:hover {
@@ -147,37 +153,131 @@ footer {
   color: #6349b2;
 }
 
-/* Animación de entrada */
-.resena {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: entrada 0.5s ease forwards;
-}
-
 .resena p {
-  white-space: pre-wrap; /* Esto preserva saltos de línea y espacios */
+  white-space: pre-wrap; /* Respeta saltos de línea y espacios */
 }
 
-
+/* === ANIMACIONES === */
 @keyframes entrada {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-#loader {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  color: black;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+
+/* === BOTÓN VOLVER === */
+.boton-volver {
+  background: linear-gradient(to right, #68389c, #da6778);
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s;
 }
+
+.boton-volver:hover {
+  background: linear-gradient(to right, #9c383b, #9f67da);
+}
+
+/* === MODO OSCURO === */
+body.dark-mode {
+  background: linear-gradient(to right, #1a1a1a, #444);
+  color: #f0f0f0;
+}
+
+body.dark-mode h2 {
+  color: #af3b3b;
+}
+
+body.dark-mode .resena {
+  background-color: #414047;
+  border: 1px solid #333;
+}
+
+body.dark-mode .resena h3 {
+  color: #af3b3b;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background: linear-gradient(to right, #601e1e, #be5151);
+  border: 1px solid #333;
+}
+
+body.dark-mode form {
+  background-color: #454341;
+  border: 1px solid #333;
+}
+
+body.dark-mode form input,
+body.dark-mode form textarea,
+body.dark-mode form select {
+  border: 1px solid #af3b3b;
+}
+
+body.dark-mode form button {
+  background: linear-gradient(to right, #d94747, #c21717);
+}
+
+body.dark-mode form button:hover {
+  background: linear-gradient(to right, #f93737, #f76666);
+}
+
+form button,
+body.dark-mode form button {
+  background: linear-gradient(to right, #68389c, #da6778);
+}
+
+form button:hover,
+body.dark-mode form button:hover {
+  background: linear-gradient(to right, #9c383b, #9f67da);
+}
+
+/* === BOTÓN ELIMINAR === */
+.eliminar-btn {
+  background-color: #da6778;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.eliminar-btn:hover {
+  background-color: #c0484a;
+}
+.editar-btn {
+  background-color: #ffaf4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.editar-btn:hover {
+  background-color: #e08a00;
+}
+
+body.dark-mode .eliminar-btn {
+  background-color: #af3b3b;
+}
+
+body.dark-mode .eliminar-btn:hover {
+  background-color: #992e2e;
+}
+
+/* === INTERRUPTOR MODO OSCURO === */
 .switch {
   position: absolute;
   top: 20px;
@@ -209,120 +309,22 @@ footer {
   border-radius: 50%;
   transition: 0.3s;
 }
-.boton-volver {
-  background: linear-gradient(to right, #68389c, #da6778);
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.boton-volver:hover {
-  background: linear-gradient(to right, #9c383b, #9f67da);
-}
-
 
 input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-body.dark-mode {
-  background: linear-gradient(to right, #1a1a1a, #444);
-  color: #f0f0f0;
-}
-
-body.dark-mode .resena {
-  background-color: #414047;
-  
-  border: 1px solid #333;
-}
-
-body.dark-mode .resena h3{
-  color: #af3b3b;
-    
-}
-
-body.dark-mode header {
-  background: linear-gradient(to right, #601e1e, #be5151);
-  border: 1px solid #333;
-}
-
-body.dark-mode footer {
-  background: linear-gradient(to right, #601e1e, #be5151);
-  border: 1px solid #333;
-}
-
-body.dark-mode form {
-  background-color: #454341;
-  border: 1px solid #333;
-}
-
-body.dark-mode form input,
-body.dark-mode form textarea,
-body.dark-mode form select {
-  border: 1px solid #af3b3b;
-}
-
-form button,
-body.dark-mode form button {
-  background: linear-gradient(to right, #68389c, #da6778);
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-form button:hover,
-body.dark-mode form button:hover {
-  background: linear-gradient(to right, #9c383b, #9f67da);
-}
-
-body.dark-mode form button {
-  background: linear-gradient(to right, #d94747, #c21717);
-}
-
-body.dark-mode form button:hover {
-  background: linear-gradient(to right, #f93737, #f76666);
-}
-
-
-body.dark-mode h2 {
-  color: #af3b3b;
-  
-}
-body.resenas-detalle .resenas-contenedor {
+/* === LOADER === */
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  color: black;
+  font-size: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
-.eliminar-btn {
-  background-color: #da6778;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  margin-top: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s;
-}
-
-.eliminar-btn:hover {
-  background-color: #c0484a;
-}
-
-body.dark-mode .eliminar-btn {
-  background-color: #af3b3b;
-}
-
-body.dark-mode .eliminar-btn:hover {
-  background-color: #992e2e;
-}
-
-

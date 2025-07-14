@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}">` : ''}
       <p><strong>Dirección:</strong> ${r.direccion || 'No disponible'}</p>
       <button class="eliminar-btn" data-id="${r._id}">🗑️ Eliminar</button>
+	  <button class="editar-btn" data-id="${r._id}">✏️ Editar</button>
     `;
 
     contenedor.appendChild(div);
@@ -99,6 +100,36 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+  document.querySelectorAll('.editar-btn').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    const id = e.target.getAttribute('data-id');
+    const reseña = reseñas.find(r => r._id === id);
+    const nuevoComentario = prompt("Edita el comentario:", reseña.comentario);
+
+    if (nuevoComentario === null || nuevoComentario.trim() === '') return;
+
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ comentario: nuevoComentario })
+      });
+
+      if (res.ok) {
+        reseña.comentario = nuevoComentario;
+        mostrarReseñas(reseñas); // Recarga solo la vista
+        calcularPromedio(reseñas);
+      } else {
+        alert('Error al actualizar la reseña.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error de conexión.');
+    }
+  });
+});
+
+  
 }
 
 

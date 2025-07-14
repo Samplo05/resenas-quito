@@ -261,6 +261,32 @@ body.dark-mode .eliminar-btn:hover {
   background-color: #992e2e;
 }
 
+/* Boton de editar*/
+.editar-btn {
+  background-color: #ffaf4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.editar-btn:hover {
+  background-color: #e08a00;
+}
+
+body.dark-mode .editar-btn {
+  background-color: #c6802b;
+}
+
+body.dark-mode .editar-btn:hover {
+  background-color: #a05c00;
+}
+
 /* === INTERRUPTOR MODO OSCURO === */
 .switch {
   position: absolute;
