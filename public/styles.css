@@ -338,3 +338,88 @@ input:checked + .slider::before {
   justify-content: center;
   z-index: 9999;
 }
+/* --- Modal edición --- */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-contenido h2 {
+  margin-bottom: 15px;
+  color: #6349b2;
+}
+
+.modal-contenido label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.modal-contenido input,
+.modal-contenido textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.modal-botones {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-botones button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#guardar-edicion {
+  background-color: #6349b2;
+  color: white;
+}
+
+#guardar-edicion:hover {
+  background-color: #4e3790;
+}
+
+#cancelar-edicion {
+  background-color: #ccc;
+}
+
+#cancelar-edicion:hover {
+  background-color: #999;
+}
+
+body.dark-mode .modal-contenido {
+  background-color: #333;
+  color: white;
+}
+
+body.dark-mode .modal-contenido input,
+body.dark-mode .modal-contenido textarea {
+  background-color: #444;
+  border: 1px solid #666;
+  color: white;
+}

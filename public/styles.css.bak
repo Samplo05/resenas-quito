@@ -252,6 +252,16 @@ body.dark-mode form button:hover {
 .eliminar-btn:hover {
   background-color: #c0484a;
 }
+
+body.dark-mode .eliminar-btn {
+  background-color: #af3b3b;
+}
+
+body.dark-mode .eliminar-btn:hover {
+  background-color: #992e2e;
+}
+
+/* Boton de editar*/
 .editar-btn {
   background-color: #ffaf4d;
   color: white;
@@ -269,12 +279,12 @@ body.dark-mode form button:hover {
   background-color: #e08a00;
 }
 
-body.dark-mode .eliminar-btn {
-  background-color: #af3b3b;
+body.dark-mode .editar-btn {
+  background-color: #c6802b;
 }
 
-body.dark-mode .eliminar-btn:hover {
-  background-color: #992e2e;
+body.dark-mode .editar-btn:hover {
+  background-color: #a05c00;
 }
 
 /* === INTERRUPTOR MODO OSCURO === */

@@ -70,26 +70,40 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
- //PUT - Editar por ID
- router.put('/:id', async (req, res) => {
+// PUT - Editar reseña (incluye imagen opcional)
+router.put('/:id', upload.single('imagen'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { comentario } = req.body;
+    const { nombre, comentario, puntuacion } = req.body;
 
-    const actualizado = await Resena.findByIdAndUpdate(
-      id,
-      { comentario },
-      { new: true }
-    );
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ mensaje: 'ID inválido' });
+    }
 
-    if (!actualizado) return res.status(404).json({ error: 'Reseña no encontrada' });
+    const actualizacion = {
+      nombre,
+      comentario,
+      puntuacion: Number(puntuacion),
+    };
+
+    // Si se envía nueva imagen, la agregamos
+    if (req.file && req.file.path) {
+      actualizacion.imagen = req.file.path;
+    }
+
+    const actualizado = await Resena.findByIdAndUpdate(id, actualizacion, { new: true });
+
+    if (!actualizado) {
+      return res.status(404).json({ mensaje: 'Reseña no encontrada' });
+    }
 
     res.json(actualizado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al actualizar la reseña' });
+    console.error('Error al actualizar reseña:', error);
+    res.status(500).json({ mensaje: 'Error al actualizar reseña' });
   }
 });
+
 
 
 module.exports = router;

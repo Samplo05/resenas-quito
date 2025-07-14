@@ -1,6 +1,14 @@
 const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal-editar');
+  const inputNombre = document.getElementById('editar-nombre');
+  const inputComentario = document.getElementById('editar-comentario');
+  const btnGuardar = document.getElementById('guardar-edicion');
+  const btnCancelar = document.getElementById('cancelar-edicion');
+
+let reseñaActual = null;
+
   const contenedor = document.querySelector('.resenas-contenedor');
   const buscador = document.getElementById('buscador');
   const loader = document.getElementById('loader');
@@ -101,32 +109,56 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   document.querySelectorAll('.editar-btn').forEach(btn => {
-  btn.addEventListener('click', async (e) => {
+  btn.addEventListener('click', (e) => {
     const id = e.target.getAttribute('data-id');
-    const reseña = reseñas.find(r => r._id === id);
-    const nuevoComentario = prompt("Edita el comentario:", reseña.comentario);
+    reseñaActual = reseñas.find(r => r._id === id);
 
-    if (nuevoComentario === null || nuevoComentario.trim() === '') return;
+    // Rellenar campos
+    inputNombre.value = reseñaActual.nombre;
+    inputComentario.value = reseñaActual.comentario;
 
-    try {
-      const res = await fetch(`${API_URL}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comentario: nuevoComentario })
-      });
-
-      if (res.ok) {
-        reseña.comentario = nuevoComentario;
-        mostrarReseñas(reseñas); // Recarga solo la vista
-        calcularPromedio(reseñas);
-      } else {
-        alert('Error al actualizar la reseña.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error de conexión.');
-    }
+    modal.style.display = 'flex';
   });
+});
+btnCancelar.addEventListener('click', () => {
+  modal.style.display = 'none';
+  reseñaActual = null;
+});
+
+btnGuardar.addEventListener('click', async () => {
+  if (!reseñaActual) return;
+
+  const nuevoNombre = inputNombre.value.trim();
+  const nuevoComentario = inputComentario.value.trim();
+
+  if (!nuevoNombre || !nuevoComentario) {
+    alert('Nombre y comentario no pueden estar vacíos');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/${reseñaActual._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: nuevoNombre,
+        comentario: nuevoComentario
+      })
+    });
+
+    if (res.ok) {
+      reseñaActual.nombre = nuevoNombre;
+      reseñaActual.comentario = nuevoComentario;
+      mostrarReseñas(reseñas);
+      calcularPromedio(reseñas);
+      modal.style.display = 'none';
+    } else {
+      alert('Error al actualizar la reseña');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Error de conexión');
+  }
 });
 
   

@@ -9,21 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Elsie:wght@400;900&display=swap" rel="stylesheet" />
   <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon" />
 </head>
-<div id="modal-editar" class="modal">
-  <div class="modal-contenido">
-    <h2>Editar Reseña</h2>
-    <label for="editar-nombre">Nombre:</label>
-    <input type="text" id="editar-nombre">
-
-    <label for="editar-comentario">Comentario:</label>
-    <textarea id="editar-comentario" rows="4"></textarea>
-
-    <div class="modal-botones">
-      <button id="guardar-edicion">Guardar</button>
-      <button id="cancelar-edicion">Cancelar</button>
-    </div>
-  </div>
-</div>
 
 <body class="resenas-detalle">
   <header>

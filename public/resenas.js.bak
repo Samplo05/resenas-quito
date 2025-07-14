@@ -1,6 +1,14 @@
 const API_URL = 'https://resenas-quito.onrender.com/api/resenas';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal-editar');
+  const inputNombre = document.getElementById('editar-nombre');
+  const inputComentario = document.getElementById('editar-comentario');
+  const btnGuardar = document.getElementById('guardar-edicion');
+  const btnCancelar = document.getElementById('cancelar-edicion');
+
+let reseñaActual = null;
+
   const contenedor = document.querySelector('.resenas-contenedor');
   const buscador = document.getElementById('buscador');
   const loader = document.getElementById('loader');
@@ -100,6 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+  document.querySelectorAll('.editar-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const id = e.target.getAttribute('data-id');
+    reseñaActual = reseñas.find(r => r._id === id);
+
+    // Rellenar campos
+    inputNombre.value = reseñaActual.nombre;
+    inputComentario.value = reseñaActual.comentario;
+
+    modal.style.display = 'flex';
+  });
+});
+
   
 }
 

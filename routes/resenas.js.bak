@@ -70,4 +70,26 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+ //PUT - Editar por ID
+ router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { comentario } = req.body;
+
+    const actualizado = await Resena.findByIdAndUpdate(
+      id,
+      { comentario },
+      { new: true }
+    );
+
+    if (!actualizado) return res.status(404).json({ error: 'Reseña no encontrada' });
+
+    res.json(actualizado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar la reseña' });
+  }
+});
+
+
 module.exports = router;
