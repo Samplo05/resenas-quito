@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modal-editar');
   const inputNombre = document.getElementById('editar-nombre');
   const inputComentario = document.getElementById('editar-comentario');
+  const inputPuntuacion = document.getElementById('editar-puntuacion');
   const btnGuardar = document.getElementById('guardar-edicion');
   const btnCancelar = document.getElementById('cancelar-edicion');
 
@@ -116,6 +117,7 @@ let reseñaActual = null;
     // Rellenar campos
     inputNombre.value = reseñaActual.nombre;
     inputComentario.value = reseñaActual.comentario;
+	inputPuntuacion.value = reseñaActual.puntuacion || 1;
 
     modal.style.display = 'flex';
   });
@@ -130,6 +132,7 @@ btnGuardar.addEventListener('click', async () => {
 
   const nuevoNombre = inputNombre.value.trim();
   const nuevoComentario = inputComentario.value.trim();
+  const nuevaPuntuacion = parseInt(inputPuntuacion.value);
 
   if (!nuevoNombre || !nuevoComentario) {
     alert('Nombre y comentario no pueden estar vacíos');
@@ -137,18 +140,21 @@ btnGuardar.addEventListener('click', async () => {
   }
 
   try {
-    const res = await fetch(`${API_URL}/${reseñaActual._id}`, {
+    const res = await 
+	fetch(`${API_URL}/${reseñaActual._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nombre: nuevoNombre,
-        comentario: nuevoComentario
-      })
+	  nombre: nuevoNombre,
+	  comentario: nuevoComentario,
+	  puntuacion: nuevaPuntuacion
+	})
     });
 
     if (res.ok) {
       reseñaActual.nombre = nuevoNombre;
       reseñaActual.comentario = nuevoComentario;
+	  reseñaActual.puntuacion = nuevaPuntuacion;
       mostrarReseñas(reseñas);
       calcularPromedio(reseñas);
       modal.style.display = 'none';

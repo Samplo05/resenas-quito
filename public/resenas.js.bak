@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modal-editar');
   const inputNombre = document.getElementById('editar-nombre');
   const inputComentario = document.getElementById('editar-comentario');
+  const inputPuntuacion = document.getElementById('editar-puntuacion');
   const btnGuardar = document.getElementById('guardar-edicion');
   const btnCancelar = document.getElementById('cancelar-edicion');
 
@@ -116,9 +117,53 @@ let reseñaActual = null;
     // Rellenar campos
     inputNombre.value = reseñaActual.nombre;
     inputComentario.value = reseñaActual.comentario;
+	inputPuntuacion.value = reseñaActual.puntuacion || 1;
 
     modal.style.display = 'flex';
   });
+});
+btnCancelar.addEventListener('click', () => {
+  modal.style.display = 'none';
+  reseñaActual = null;
+});
+
+btnGuardar.addEventListener('click', async () => {
+  if (!reseñaActual) return;
+
+  const nuevoNombre = inputNombre.value.trim();
+  const nuevoComentario = inputComentario.value.trim();
+  const nuevaPuntuacion = parseInt(inputPuntuacion.value);
+
+  if (!nuevoNombre || !nuevoComentario) {
+    alert('Nombre y comentario no pueden estar vacíos');
+    return;
+  }
+
+  try {
+    const res = await 
+	fetch(`${API_URL}/${reseñaActual._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+	  nombre: nuevoNombre,
+	  comentario: nuevoComentario,
+	  puntuacion: nuevaPuntuacion
+	})
+    });
+
+    if (res.ok) {
+      reseñaActual.nombre = nuevoNombre;
+      reseñaActual.comentario = nuevoComentario;
+      mostrarReseñas(reseñas);
+      calcularPromedio(reseñas);
+      modal.style.display = 'none';
+    } else {
+      alert('Error al actualizar la reseña');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Error de conexión');
+  }
 });
 
   

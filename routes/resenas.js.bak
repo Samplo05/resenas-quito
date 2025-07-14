@@ -70,15 +70,19 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
- //PUT - Editar por ID
- router.put('/:id', async (req, res) => {
+// PUT - Editar reseña (incluye imagen opcional)
+router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { comentario } = req.body;
+    const { nombre, comentario, puntuacion } = req.body;
 
     const actualizado = await Resena.findByIdAndUpdate(
       id,
-      { comentario },
+      {
+        nombre,
+        comentario,
+        puntuacion: Number(puntuacion)
+      },
       { new: true }
     );
 
@@ -86,10 +90,12 @@ router.delete('/:id', async (req, res) => {
 
     res.json(actualizado);
   } catch (error) {
-    console.error(error);
+    console.error('Error al actualizar reseña:', error.message, error.stack);
     res.status(500).json({ error: 'Error al actualizar la reseña' });
   }
 });
+
+
 
 
 module.exports = router;
