@@ -71,7 +71,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PUT - Editar reseña (incluye imagen opcional)
-router.put('/api/resenas/:id', upload.single('imagen'), async (req, res) => {
+router.put('/:id', upload.single('imagen'), async (req, res) => {
   const { id } = req.params;
   const { nombre, comentario, direccion, puntuacion } = req.body;
 
