@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reseñas - Turisteando Quito</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Elsie:wght@400;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon" />
+</head>
+<div id="modal-editar" class="modal">
+  <div class="modal-contenido">
+    <h3>Editar Reseña</h3>
+    <label for="editar-nombre">Nombre:</label>
+    <input type="text" id="editar-nombre" />
+
+    <label for="editar-comentario">Comentario:</label>
+    <textarea id="editar-comentario"></textarea>
+
+    <label for="editar-direccion">Dirección:</label>
+    <input type="text" id="editar-direccion" />
+
+    <label for="editar-puntuacion">Puntuación:</label>
+    <select id="editar-puntuacion">
+      <option value="1">⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="5">⭐⭐⭐⭐⭐</option>
+    </select>
+
+    <label for="editar-imagen">Cambiar Imagen (opcional):</label>
+    <input type="file" id="editar-imagen" accept="image/*" />
+
+    <div class="botones">
+      <button id="guardar-edicion">Guardar</button>
+      <button id="cancelar-edicion">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<body class="resenas-detalle">
+  <header>
+    <img src="imagenes/logo.png" alt="Logo" id="logo" />
+    <h1>Turisteando Quito</h1>
+
+    <div style="margin-left:auto; display: flex; align-items: center; gap: 1rem; margin-right: 20px;">
+      <input type="text" id="buscador" placeholder="Buscar reseña..." />
+      <label class="switch" title="Modo oscuro"></label>
+        🌙: <input type="checkbox" id="modoOscuroToggle" />
+        
+      </label>
+      
+    </div>
+  </header>
+<button id="btn-volver" class="boton-volver" src="principal.html">← Volver</button>
+  <main>
+    <section>
+      <h2>Reseñas Registradas</h2>
+      <p id="promedioEstrellas">Promedio de estrellas: ⭐ --</p>
+    </section>
+<label for="editar-puntuacion" hidden="true">Estrellas:</label>
+<select id="editar-puntuacion" hidden="true">
+  <option value="1">⭐</option>
+  <option value="2">⭐⭐</option>
+  <option value="3">⭐⭐⭐</option>
+  <option value="4">⭐⭐⭐⭐</option>
+  <option value="5">⭐⭐⭐⭐⭐</option>
+</select>
+
+    <section>
+      <div id="loader" class="loader">Cargando reseñas...</div>
+      <div class="resenas-contenedor"></div>
+    </section>
+  </main>
+<div class="img-modal" id="img-modal">
+  <img id="modal-img" src="" alt="Imagen ampliada">
+</div>
+  <footer>
+    <p>&copy; 2025 Turisteando Quito / <a href="gnotus.html" id="enlace-gnotus"> !gnotus </a>. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="resenas.js"></script>
+</body>
+</html>
