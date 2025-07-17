@@ -564,7 +564,7 @@ body.dark-mode .modal-contenido textarea {
 
 .resena-img {
   position: absolute;
-  top: 6rem;
+  top: 4rem;
   right: 2rem;
   max-width: 300px;
   max-height: 300px;
@@ -627,4 +627,50 @@ body.dark-mode .modal-contenido textarea {
 .listado-principal .resena p {
   font-size: 0.95rem;
   line-height: 1.4;
+}
+.equipo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.miembro {
+  background-color: var(--color-blanco);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  max-width: 250px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.miembro:hover {
+  transform: scale(1.05);
+}
+
+.miembro img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid var(--color-principal);
+}
+
+.miembro blockquote {
+  font-style: italic;
+  color: var(--color-gris-oscuro);
+}
+
+/* Modo oscuro */
+.dark-mode .miembro {
+  background-color: var(--color-gris);
+  color: var(--color-blanco);
+}
+
+.dark-mode .miembro blockquote {
+  color: var(--color-claro);
 }

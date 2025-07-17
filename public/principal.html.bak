@@ -41,12 +41,12 @@
     <section id="reseñas">
       <h2>Reseñas</h2>
       <div id="loader" style="display:none;">Cargando reseñas...</div>
-      <div class="resenas-contenedor"></div>
+      <div class="resenas-contenedor listado-principal"></div>
     </section>
 
     <section id="acciones">
-      <button id="exportarJSON">Exportar reseñas a JSON</button>
-      <button id="borrarTodo">Borrar todas las reseñas</button>
+      <button id="exportarJSON" hidden="true">Exportar reseñas a JSON</button><!-- esto es secreto, solo cuando yo quiera lo voy a poner-->
+      <button id="borrarTodo" hidden="true">Borrar todas las reseñas</button>
     </section>
 	<section id="formulario">
       <h2>Agregar nueva reseña</h2>
@@ -78,7 +78,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Sabores de Quito / !gnotus - Todos los derechos reservados.</p>
+    <p>&copy; 2025 Turisteando Quito / <a href="gnotus.html" id="enlace-gnotus"> !gnotus - Todos los derechos reservados.</p>
   </footer>
 
   <script src="script.js"></script>

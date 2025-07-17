@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Equipo !gnotus - Turisteando Quito</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Elsie:wght@400;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <header>
+    <img src="imagenes/logo.png" alt="Logo" id="logo" />
+    <h1>Conoce al equipo !gnotus</h1>
+  </header>
+
+  <main>
+    <section class="equipo">
+		<div class="miembro">
+			  <img src="imagenes/miembros/samuel.png" alt="Samuel">
+			  <h2>Samuel Beltrán</h2>
+			  <p>Edad: 19 años</p>
+			<blockquote>"Inviten el almuerzo. <br>Gracias."</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/vale.png" alt="Vale">
+			  <h2>Valentina Cordero</h2>
+			  <p>Edad: 19 años</p>
+			<blockquote>"Soy una persona extrovertida, dinámica y llena de energía. Disfruto de interactuar con los demás, compartir experiencias y vivir momentos emocionantes."</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/mai.jpeg" alt="Mai">
+			  <h2>Maily Molina</h2>
+			  <p>Edad: 19 años</p>
+			<blockquote>"Una chica risueña, con expectativas de conocer más allá de lo tradicional."</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/gladys.jpeg" alt="Gladys">
+			  <h2>Gladys Ciza</h2>
+			  <p>Edad: 19</p>
+			<blockquote>"Soy una chica alegre, con buena vibra. Vivo lejos, pero eso nunca ha sido un problema... a veces no sé ni a dónde voy, pero igual me lanzo."</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/joss.jpeg" alt="Joss">
+			  <h2>Josselyn Delgado</h2>
+			  <p>Edad: 21</p>
+			<blockquote>"Hola, soy Josselyn"</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/ana.jpeg" alt="Ana">
+			  <h2>Melany Parra</h2>
+			  <p>Edad: 20</p>
+			<blockquote>"Tengo una gran capacidad para empatizar con los demás, mi sensibilidad me permite conectar profundamente con las personas, me caracterizó por la tener paciencia para resolver problemas y soy muy creativa. ¡Pintame, Jeik!"</blockquote>
+		</div>
+		<div class="miembro">
+			  <img src="imagenes/miembros/maremimi.jpeg" alt="Maremimi">
+			  <h2>Maria Emilia Minchala</h2>
+			  <p>Edad: 21</p>
+			<blockquote>"Me encanta viajar y descubrir nuevos lugares, sobre todo nuevas huecas, sabores y colores. A una caminata nunca le digo que no si hay un cevichocho o una espumilla de por medio. ♥"</blockquote>
+		</div>
+	
+	  <!-- Aquí irá cada integrante -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Turisteando Quito / !gnotus. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
