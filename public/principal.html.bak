@@ -41,7 +41,7 @@
     <section id="reseñas">
       <h2>Reseñas</h2>
       <div id="loader" style="display:none;">Cargando reseñas...</div>
-      <div class="resenas-contenedor listado-principal"></div>
+      <div class="resenas-contenedor"></div>
     </section>
 
     <section id="acciones">

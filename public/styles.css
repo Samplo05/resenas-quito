@@ -572,3 +572,59 @@ body.dark-mode .modal-contenido textarea {
   object-fit: cover;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
+/* --- Efecto hover: zoom suave --- */
+.resena-img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.resena-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+/* === Modal para imagen ampliada === */
+.img-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.img-modal img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(250, 250, 250, 0.5);
+  transition: transform 0.3s ease;
+}
+
+/* === Estilos compactos solo para principal.html === */
+.listado-principal .resena {
+  padding: 10px;
+  padding-right: 15px;
+  position: static;
+  font-family: 'Georgia', serif;
+}
+
+.listado-principal .resena img,
+.listado-principal .resena-img {
+  display: none;
+}
+
+.listado-principal .resena h3 {
+  font-size: 1.2rem;
+  color: #6349b2;
+  margin-bottom: 5px;
+}
+
+.listado-principal .resena p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}

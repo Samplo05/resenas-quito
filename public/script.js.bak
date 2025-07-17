@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
       article.classList.add('resena');
 
       const comentarioCorto = recortarTexto(resena.comentario, 120); // recorta si pasa de 120 caracteres
-      const direccionCorta = recortarTexto(resena.direccion, 120); // recorta si pasa de 120 caracteres	  
+      const direccionCorta = recortarTexto(resena.direccion, 120); // recorta si pasa de 120 caracteres	  ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
 
       article.innerHTML = `
-        ${resena.imagen ? `<img src="${resena.imagen}" alt="Foto del lugar" />` : ''}
+        
         <h3>${resena.nombre}</h3>
         <p><strong>Dirección:</strong> ${direccionCorta}</p>
    		<p><strong>Comentario:</strong> ${resena.comentario.length > 100 
@@ -130,9 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  cargarResenas();
-console.log('Imagen subida:', imagenUrl);
 
   window.addEventListener('load', () => {
     loader.style.display = 'none';

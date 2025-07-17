@@ -175,10 +175,7 @@ btnGuardar.addEventListener('click', async () => {
   }
 });
 
-
-  
 }
-
 
   // Calcular promedio
   function calcularPromedio(lista) {
@@ -191,4 +188,23 @@ btnGuardar.addEventListener('click', async () => {
     const promedio = (suma / lista.length).toFixed(1);
     promedioEstrellas.textContent = `Promedio de estrellas: ⭐ ${promedio}`;
   }
+  // Modal para ampliar imagen
+const imgModal = document.getElementById('img-modal');
+const modalImg = document.getElementById('modal-img');
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('resena-img')) {
+    modalImg.src = e.target.src;
+    imgModal.style.display = 'flex';
+  } else if (e.target === imgModal) {
+    imgModal.style.display = 'none';
+  }
+});
+// Cerrar modal con tecla Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && imgModal.style.display === 'flex') {
+    imgModal.style.display = 'none';
+  }
+});
+
 });

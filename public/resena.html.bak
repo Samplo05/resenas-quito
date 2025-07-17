@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>modal
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Reseñas - Turisteando Quito</title>
@@ -71,10 +71,12 @@
 
     <section>
       <div id="loader" class="loader">Cargando reseñas...</div>
-      <div class="resenas-contenedor"></div>
+      <div class="resenas-contenedor detalle-resena"></div>
     </section>
   </main>
-
+<div class="img-modal" id="img-modal">
+  <img id="modal-img" src="" alt="Imagen ampliada">
+</div>
   <footer>
     <p>&copy; 2025 Turisteando Quito. Todos los derechos reservados.</p>
   </footer>
