@@ -674,3 +674,69 @@ body.dark-mode .modal-contenido textarea {
 .dark-mode .miembro blockquote {
   color: var(--color-claro);
 }
+/* Contenedor de reseñas en modo cuadrícula */
+.resenas-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Cada tarjeta de reseña o miembro */
+.resena,
+.miembro {
+  background-color: var(--color-blanco);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 300px;
+  flex: 1 1 250px;
+  word-wrap: break-word;
+}
+
+/* RESPONSIVO para pantallas pequeñas */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #logo {
+    width: 80px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .resenas-contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .resena,
+  .miembro {
+    max-width: 90%;
+  }
+
+  .miembro img {
+    width: 120px;
+    height: 120px;
+  }
+}
+form input,
+form textarea,
+form select,
+form button {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.resena {
+  max-width: 300px;
+  min-width: 250px;
+  flex: 1 1 auto;
+}
+
