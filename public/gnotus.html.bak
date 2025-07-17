@@ -25,43 +25,43 @@
 			  <img src="imagenes/miembros/samuel.png" alt="Samuel">
 			  <h2>Samuel Beltrán</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Inviten el almuerzo. <br><br><br>Gracias."</blockquote>
+			<blockquote>"Me gusta el Encebollado.<br><br>Inviten el almuerzo. <br>Gracias."</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/vale.png" alt="Vale">
 			  <h2>Valentina Cordero</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Soy una persona extrovertida, dinámica y llena de energía. Disfruto de interactuar con los demás, compartir experiencias y vivir momentos emocionantes."</blockquote>
+			<blockquote>"Soy una persona extrovertida, dinámica y llena de energía. Disfruto de interactuar con los demás, compartir experiencias y vivir momentos emocionantes. <br><br>Dios, patria y monogamia"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/mai.jpeg" alt="Mai">
 			  <h2>Maily Molina</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Una chica risueña, con expectativas de conocer más allá de lo tradicional."</blockquote>
+			<blockquote>"Una chica risueña, con expectativas de conocer más allá de lo tradicional. <br><br> Minimo un 20"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/gladys.jpeg" alt="Gladys">
 			  <h2>Gladys Ciza</h2>
-			  <p>Edad: 19</p>
-			<blockquote>"Soy una chica alegre, con buena vibra. Vivo lejos, pero eso nunca ha sido un problema... a veces no sé ni a dónde voy, pero igual me lanzo."</blockquote>
+			  <p>Edad: 19 años</p>
+			<blockquote>"Soy una chica alegre, con buena vibra. Vivo lejos, pero eso nunca ha sido un problema... a veces no sé ni a dónde voy, pero igual me lanzo. <br>verde supremacy"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/joss.jpeg" alt="Joss">
 			  <h2>Josselyn Delgado</h2>
-			  <p>Edad: 21</p>
-			<blockquote>"Hola, soy Josselyn"</blockquote>
+			  <p>Edad: 21 años</p>
+			<blockquote>"Hola, soy Josselyn <br><br>Amo las huecas cerca de mi Universidad ☺"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/ana.jpeg" alt="Ana">
 			  <h2>Melany Parra</h2>
-			  <p>Edad: 20</p>
-			<blockquote>"Tengo una gran capacidad para empatizar con los demás, mi sensibilidad me permite conectar profundamente con las personas, me caracterizó por la tener paciencia para resolver problemas y soy muy creativa. ¡Pintame, Jeik!"</blockquote>
+			  <p>Edad: 20 años</p>
+			<blockquote>"Tengo una gran capacidad para empatizar con los demás, mi sensibilidad me permite conectar profundamente con las personas, me caracterizó por la tener paciencia para resolver problemas y soy muy creativa. <br><br>¡Pintame, Jeik!"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/maremimi.jpeg" alt="Maremimi">
 			  <h2>Maria Emilia Minchala</h2>
-			  <p>Edad: 21</p>
-			<blockquote>"Me encanta viajar y descubrir nuevos lugares, sobre todo nuevas huecas, sabores y colores. A una caminata nunca le digo que no si hay un cevichocho o una espumilla de por medio. ♥"</blockquote>
+			  <p>Edad: 21 años</p>
+			<blockquote>"Me encanta viajar y descubrir nuevos lugares, sobre todo nuevas huecas, sabores y colores. A una caminata nunca le digo que no si hay un cevichocho o una espumilla de por medio. ♥ <br><br>Maremimi"</blockquote>
 		</div>
 	
 	  <!-- Aquí irá cada integrante -->
@@ -71,5 +71,18 @@
   <footer>
     <p>&copy; 2025 Turisteando Quito / !gnotus. Todos los derechos reservados.</p>
   </footer>
+  <script>
+  const toggle = document.getElementById("modoOscuroToggle");
+  if (localStorage.getItem("modoOscuro") === "true") {
+    document.body.classList.add("dark-mode");
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("modoOscuro", document.body.classList.contains("dark-mode"));
+  });
+</script>
+
 </body>
 </html>
