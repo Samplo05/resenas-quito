@@ -765,3 +765,21 @@ body.dark-mode .modal-contenido textarea {
 .dark-mode .btn-volver:hover {
   background-color: #666;
 }
+@media screen and (max-width: 768px) {
+  .equipo {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .miembro {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .miembro img {
+    width: 160px;
+    height: 200px;
+  }
+}
