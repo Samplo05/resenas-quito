@@ -54,7 +54,7 @@
       
     </div>
   </header>
-<button id="btn-volver" class="boton-volver" src="principal.html">← Volver</button>
+<button id="btn-volver" class="boton-volver">← Volver</button>
   <main>
     <section>
       <h2>Reseñas Registradas</h2>
