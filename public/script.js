@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   cargarResenas();
+console.log('Imagen subida:', imagenUrl);
 
   window.addEventListener('load', () => {
     loader.style.display = 'none';

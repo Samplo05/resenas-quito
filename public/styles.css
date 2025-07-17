@@ -178,10 +178,22 @@ body.resenas-detalle .resenas-contenedor {
   transition: background 0.3s;
 }
 
+
 .boton-volver:hover {
   background: linear-gradient(to right, #9c383b, #9f67da);
 }
 
+.boton-volver:hover {
+  background-color: #c0484a;
+}
+
+body.dark-mode .boton-volver {
+  background-color: #af3b3b;
+}
+
+body.dark-mode .boton-volver:hover {
+  background-color: #992e2e;
+}
 /* === MODO OSCURO === */
 body.dark-mode {
   background: linear-gradient(to right, #1a1a1a, #444);
