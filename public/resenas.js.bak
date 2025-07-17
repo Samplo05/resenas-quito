@@ -145,24 +145,25 @@ btnGuardar.addEventListener('click', async () => {
   }
 
   try {
-    const formData = new FormData();
-    formData.append('nombre', nuevoNombre);
-    formData.append('comentario', nuevoComentario);
-    formData.append('direccion', nuevaDireccion);
-    formData.append('puntuacion', nuevaPuntuacion);
-    if (nuevaImagen) {
-      formData.append('imagen', nuevaImagen);
-    }
-
-    const res = await fetch(`${API_URL}/${reseñaActual._id}`, {
+    const res = await 
+	fetch(`${API_URL}/${reseñaActual._id}`, {
       method: 'PUT',
-      body: formData
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+	  nombre: nuevoNombre,
+	  comentario: nuevoComentario,
+	  direccion: nuevaDireccion,
+	  puntuacion: nuevaPuntuacion,
+	  imagen: nuevaImagen
+	})
     });
 
     if (res.ok) {
-      const actualizada = await res.json();
-      const i = reseñas.findIndex(r => r._id === reseñaActual._id);
-      reseñas[i] = actualizada;
+      reseñaActual.nombre = nuevoNombre;
+      reseñaActual.comentario = nuevoComentario;
+      reseñaActual.direccion = nuevaDireccion;
+	  reseñaActual.puntuacion = nuevaPuntuacion;
+	  reseñaActual.imagen = nuevaImagen;
       mostrarReseñas(reseñas);
       calcularPromedio(reseñas);
       modal.style.display = 'none';
@@ -174,7 +175,6 @@ btnGuardar.addEventListener('click', async () => {
     alert('Error de conexión');
   }
 });
-
 
   
 }

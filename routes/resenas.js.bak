@@ -71,33 +71,29 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PUT - Editar reseña (incluye imagen opcional)
-router.put('/api/resenas/:id', upload.single('imagen'), async (req, res) => {
-  const { id } = req.params;
-  const { nombre, comentario, direccion, puntuacion } = req.body;
-
+router.put('/:id', async (req, res) => {
   try {
-    const resena = await Resena.findById(id);
-    if (!resena) return res.status(404).json({ error: 'No encontrada' });
+    const { id } = req.params;
+    const { nombre, comentario, puntuacion } = req.body;
 
-    resena.nombre = nombre;
-    resena.comentario = comentario;
-    resena.direccion = direccion;
-    resena.puntuacion = puntuacion;
+    const actualizado = await Resena.findByIdAndUpdate(
+      id,
+      {
+        nombre,
+        comentario,
+        puntuacion: Number(puntuacion)
+      },
+      { new: true }
+    );
 
-    if (req.file) {
-      // subir imagen a Cloudinary y reemplazar la anterior
-      const subida = await cloudinary.uploader.upload(req.file.path);
-      resena.imagen = subida.secure_url;
-    }
+    if (!actualizado) return res.status(404).json({ error: 'Reseña no encontrada' });
 
-    await resena.save();
-    res.json(resena);
+    res.json(actualizado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error actualizando reseña' });
+    console.error('Error al actualizar reseña:', error.message, error.stack);
+    res.status(500).json({ error: 'Error al actualizar la reseña' });
   }
 });
-
 
 
 
