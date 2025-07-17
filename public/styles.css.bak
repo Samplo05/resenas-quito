@@ -674,29 +674,12 @@ body.dark-mode .modal-contenido textarea {
 .dark-mode .miembro blockquote {
   color: var(--color-claro);
 }
-/* Contenedor de reseñas en modo cuadrícula */
-.resenas-contenedor {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-/* Cada tarjeta de reseña o miembro */
-.resena,
-.miembro {
-  background-color: var(--color-blanco);
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  max-width: 300px;
-  flex: 1 1 250px;
-  word-wrap: break-word;
-}
-
-/* RESPONSIVO para pantallas pequeñas */
+/* 👇 ESTILOS PARA CELULAR */
 @media (max-width: 768px) {
+  body {
+    padding: 0 1rem;
+  }
+
   header {
     flex-direction: column;
     align-items: center;
@@ -704,11 +687,17 @@ body.dark-mode .modal-contenido textarea {
   }
 
   #logo {
-    width: 80px;
+    width: 90px;
+    margin-bottom: 10px;
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  #filtros, #acciones, #formulario {
+    padding: 1rem 0;
   }
 
   .resenas-contenedor {
@@ -716,14 +705,30 @@ body.dark-mode .modal-contenido textarea {
     align-items: center;
   }
 
-  .resena,
-  .miembro {
-    max-width: 90%;
+  .resena {
+    width: 100%;
+    max-width: 95%;
+    font-size: 1rem;
   }
 
-  .miembro img {
-    width: 120px;
-    height: 120px;
+  .resena img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    margin-top: 1rem;
+  }
+
+  form input,
+  form textarea,
+  form select,
+  form button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  footer {
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
   }
 }
-

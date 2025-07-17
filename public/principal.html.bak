@@ -33,6 +33,8 @@
         <option value="4">4 ⭐ o más</option>
         <option value="5">5 ⭐</option>
       </select>
+
+      
     </section>
 
     <section id="reseñas" >

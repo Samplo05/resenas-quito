@@ -674,3 +674,61 @@ body.dark-mode .modal-contenido textarea {
 .dark-mode .miembro blockquote {
   color: var(--color-claro);
 }
+/* 👇 ESTILOS PARA CELULAR */
+@media (max-width: 768px) {
+  body {
+    padding: 0 1rem;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #logo {
+    width: 90px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  #filtros, #acciones, #formulario {
+    padding: 1rem 0;
+  }
+
+  .resenas-contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .resena {
+    width: 100%;
+    max-width: 95%;
+    font-size: 1rem;
+  }
+
+  .resena img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    margin-top: 1rem;
+  }
+
+  form input,
+  form textarea,
+  form select,
+  form button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  footer {
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
+  }
+}
