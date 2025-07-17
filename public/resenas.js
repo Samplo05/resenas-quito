@@ -78,7 +78,7 @@ let reseñaActual = null;
       <h3>${r.nombre}</h3>
       <p><strong>Comentario:</strong> ${r.comentario}</p>
       <p><strong>Estrellas:</strong> ${'⭐'.repeat(r.puntuacion)}</p>
-      ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}">` : ''}
+      ${r.imagen ? `<img src="${r.imagen}" alt="Imagen de ${r.nombre}" class="resena-img">` : ''}
       <p><strong>Dirección:</strong> ${r.direccion || 'No disponible'}</p>
       <button class="eliminar-btn" data-id="${r._id}">🗑️ Eliminar</button>
 	  <button class="editar-btn" data-id="${r._id}">✏️ Editar</button>

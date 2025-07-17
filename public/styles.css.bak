@@ -564,7 +564,7 @@ body.dark-mode .modal-contenido textarea {
 
 .resena-img {
   position: absolute;
-  top: 6rem;
+  top: 5rem;
   right: 2rem;
   max-width: 300px;
   max-height: 300px;
