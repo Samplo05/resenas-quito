@@ -696,13 +696,16 @@ body.dark-mode .modal-contenido textarea {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
+    display: flex;
   }
 
   .resena img {
     width: 100%;
     height: auto;
-    margin-top: 10px;
-    align-self: center;
+    margin: 10px 0;
+    float: none !important;
+    display: block;
+    position: static;
   }
 
   .resena h3,
@@ -735,4 +738,30 @@ body.dark-mode .modal-contenido textarea {
   .modal-content {
     max-width: 95%;
   }
+}
+.btn-volver {
+  background: linear-gradient(to right, #68389c, #da6778);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 20px auto;
+  display: block;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #0d6efd;
+}
+
+/* Versión modo oscuro */
+.dark-mode .btn-volver {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode .btn-volver:hover {
+  background-color: #666;
 }

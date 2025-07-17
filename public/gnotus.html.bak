@@ -14,7 +14,7 @@
     <img src="imagenes/logo.png" alt="Logo" id="logo" />
     <h1>Conoce al equipo !gnotus</h1>
   </header>
-
+<button id="btn-volver" class="boton-volver">← Volver</button>
   <main>
     <section class="equipo">
 		<div class="miembro">
