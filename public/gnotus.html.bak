@@ -25,7 +25,7 @@
 			  <img src="imagenes/miembros/samuel.png" alt="Samuel">
 			  <h2>Samuel Beltrán</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Me gusta el Encebollado.<br><br>Inviten el almuerzo. <br>Gracias."</blockquote>
+			<blockquote>"Me gusta el Encebollado.<br><br><br>Inviten el almuerzo. <br>Gracias."</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/vale.png" alt="Vale">
@@ -37,13 +37,13 @@
 			  <img src="imagenes/miembros/mai.jpeg" alt="Mai">
 			  <h2>Maily Molina</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Una chica risueña, con expectativas de conocer más allá de lo tradicional. <br><br> Minimo un 20"</blockquote>
+			<blockquote>"Una chica risueña, con expectativas de conocer más allá de lo tradicional. <br><br><br> Minimo un 20 profe"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/gladys.jpeg" alt="Gladys">
 			  <h2>Gladys Ciza</h2>
 			  <p>Edad: 19 años</p>
-			<blockquote>"Soy una chica alegre, con buena vibra. Vivo lejos, pero eso nunca ha sido un problema... a veces no sé ni a dónde voy, pero igual me lanzo. <br>verde supremacy"</blockquote>
+			<blockquote>"Soy una chica alegre, con buena vibra. Vivo lejos, pero eso nunca ha sido un problema... a veces no sé ni a dónde voy, pero igual me lanzo. <br><br>Verde supremacy"</blockquote>
 		</div>
 		<div class="miembro">
 			  <img src="imagenes/miembros/joss.jpeg" alt="Joss">
