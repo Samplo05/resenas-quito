@@ -78,7 +78,7 @@
   <img id="modal-img" src="" alt="Imagen ampliada">
 </div>
   <footer>
-    <p>&copy; 2025 Turisteando Quito / <a href="gnotus.html" id="enlace-gnotus"> !gnotus </a>. Todos los derechos reservados.</p>
+    <p>&copy; 2025 Turisteando Quito / <a href="gnotus.html" id="enlace-gnotus"> !gnotus</a>. Todos los derechos reservados.</p>
   </footer>
 
   <script src="resenas.js"></script>
